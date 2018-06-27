@@ -1,0 +1,24 @@
+@startuml
+
+!define User ユーザー
+!define System システム
+
+participant "User" as User
+participant "System" as System
+
+activate User
+User   -> System  : タスクを作る(タイトル, カテゴリ, 内容) 
+activate System
+User   -> System  : ポモドーロ開始(タスク) 
+User   -> System  : ポモドーロ終了(タスク, 実施内容サマリー) 
+User -> User      : 休憩()
+User   -> System  : ポモドーロ開始(タスク) 
+User   -> System  : ポモドーロ終了(タスク, 実施内容サマリー) 
+User -> User      : 休憩()
+User   -> System  : ポモドーロ開始(タスク) 
+User   -> System  : ポモドーロ終了(タスク, 実施内容サマリー) 
+User   -> System  : タスクを終える(タスク) 
+deactivate System 
+deactivate User 
+
+@enduml

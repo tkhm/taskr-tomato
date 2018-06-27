@@ -1,0 +1,6 @@
+{
+  "/taskr-tomato-api": {
+    "target": "https://localhost:10443/",
+    "secure": false
+  }
+}

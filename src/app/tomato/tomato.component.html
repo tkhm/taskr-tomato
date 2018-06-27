@@ -1,0 +1,86 @@
+<h2>Havesting:</h2>
+<div>
+  <div *ngFor="let category of categoryList">
+    <h3>{{ category | titlecase }}</h3>
+    <ul>
+      <ng-container *ngFor="let task of (taskList | taskCategory: category)">
+        <li *ngFor="let tomato of task.tomatoes; index as i">
+          <p id={{tomato.taskId}}_{{i}}>{{ tomato.summary }}, {{ task.title }}, {{ tomato.startedAt | date }}, {{ tomato.endedAt | date }}</p>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>
+
+<h2>Tasks:</h2>
+<div>
+  <table border="1">
+    <thead>
+      <tr>
+        <td>タスクID</td>
+        <td>カテゴリ</td>
+        <td>タイトル</td>
+        <td>内容</td>
+        <td>進行状況</td>
+        <td>実施数</td>
+        <td>作成日</td>
+        <td>更新日</td>
+      </tr>
+    </thead>
+    <tr *ngFor="let task of taskList">
+      <td>{{ task.id }}</td>
+      <td>{{ task.category }}</td>
+      <td>{{ task.title }}</td>
+      <td>{{ task.description }}</td>
+      <td>{{ task.isFinished.toString() | i18nSelect: isFinishedMessages }}</td>
+      <td>{{ task.tomatoes.length }}</td>
+      <td>{{ task.createdAt | date }}</td>
+      <td>{{ task.updatedAt | date }}</td>
+    </tr>
+  </table>
+</div>
+
+<form>
+  <div>
+    <label for="t2">Category:</label>
+    <select id="t2" name="t2" [(ngModel)]="task.category" required>
+      <option *ngFor="let category of categoryList" [value]="category">{{category}}</option>
+    </select>
+  </div>
+  <div>
+    <label for="i3">Title:</label>
+    <input type="text" id="t3" name="t3" [(ngModel)]="task.title" ng-trim="false">
+  </div>
+  <div>
+    <label for="i4">Description:</label>
+    <input type="text" id="t4" name="t4" [(ngModel)]="task.description" ng-trim="false">
+  </div>
+  <div>
+    <label for="i5">Finished:</label>
+    <input type="checkbox" id="t5" name="t5" [(ngModel)]="task.isFinished" ng-trim="false">
+  </div>
+  <button type="button" (click)="createTask()">Create Task</button>
+</form>
+
+<h2>Tomato:</h2>
+<p>
+  tomato works!
+</p>
+<div>{{ timerSeconds | secondsMinutes }}</div>
+<p>My archivement: {{ tomato.summary }}</p>
+<form> 
+  <div>
+    <label for="i1">Task:</label>
+    <select id="i1" name="i1" [(ngModel)]="tomato.taskId" required>
+      <option *ngFor="let task of taskList" [value]="task.id">{{task.title}}</option>
+    </select>
+  </div>
+  <div>
+    <label for="i3">Summary:</label>
+    <input type="text" id="i3" name="i3" [(ngModel)]="tomato.summary" ng-trim="false">
+  </div>
+  <button type="button" (click)="startTimer()">Start</button>
+  <button type="button" (click)="stopTimer()">Stop</button>
+  <button type="button" (click)="resetTimer()">Reset</button>
+  <button type="button" (click)="doneTimer()">Done</button>
+</form>
